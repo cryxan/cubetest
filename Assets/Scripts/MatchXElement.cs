@@ -1,34 +1,29 @@
-using System;
 using UnityEngine;
-using Random = System.Random;
 
 namespace MatchX
 {
     public class MatchXElement : MonoBehaviour
     {
-        private float deltaTime = 0.0f;
-        private const float delay = 1.0f;
-        private Random random = new Random();
-
-        private Material objectMaterial;
+        public cubeColour Colour { get; private set; }
+        public Vector3Int Position;
         
-        public void SetColour(Color newColor)
+        private Material objectMaterial;
+        public void SetColour(cubeColour newColor)
         {
+            Colour = newColor;
             objectMaterial ??= gameObject.GetComponent<Renderer>().material;
-            objectMaterial.color = newColor;
+            objectMaterial.color = getColor(newColor);
         }
-
-        /*
-        public void Update()
+        
+        private Color getColor(cubeColour colIndex)
         {
-            deltaTime += Time.deltaTime;
-            if (deltaTime > delay)
+            return (colIndex) switch
             {
-                deltaTime -= delay;
-                
-                SetColour(new Color((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), 1.0f));
-            }
+                cubeColour.red => Color.red,
+                cubeColour.blue => Color.blue,
+                cubeColour.green => Color.green,
+                _ => Color.yellow
+            };
         }
-        */
     }
 }
